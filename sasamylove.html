@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Untuk NAMA_DIA 🤍</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(135deg, #ffd6e8, #fff5fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* CARD */
+.card {
+  width: 90%;
+  max-width: 600px;
+  padding: 28px;
+  border-radius: 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  background-image: url('bg-card.jpg');
+  background-size: cover;
+  background-position: center;
+
+  box-shadow: 0 20px 40px rgba(255, 120, 170, 0.35);
+  animation: fadeIn 1.8s ease;
+}
+
+/* GLASS */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(8px);
+  border-radius: 28px;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* LOVE */
+.love {
+  font-size: 52px;
+  cursor: pointer;
+  animation: float 2.5s ease-in-out infinite;
+  user-select: none;
+}
+
+.love-hint {
+  font-size: 12px;
+  color: #ff7eb6;
+  margin-bottom: 12px;
+}
+
+/* FOTO */
+.photo {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+/* TEXT */
+h1 {
+  color: #ff5fa2;
+  margin-bottom: 14px;
+}
+
+.text-line {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease;
+  margin-bottom: 6px;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #888;
+}
+
+/* FLOWER */
+.flower {
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  opacity: 0.8;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+  <!-- LOVE -->
+  <div class="love" id="loveBtn">🤍</div>
+  <div class="love-hint">tap pelan ya</div>
+
+  <!-- FOTO -->
+  <img src="foto.jpeg" class="photo">
+
+  <h1>Hai cewee 🤍</h1>
+
+  <!-- TEXT PER BARIS -->
+  <div id="text">
+    <div class="text-line">Hallo, sayang.</div>
+    <div class="text-line">Semoga hari ini berjalan dengan lembut untuk kamu.</div>
+    <div class="text-line"></div>
+    <div class="text-line">Kalau dunia terasa sedikit berat,</div>
+    <div class="text-line">ingat ya — kamu nggak sendirian.</div>
+    <div class="text-line"></div>
+    <div class="text-line">Kamu sudah melakukan yang terbaik,</div>
+    <div class="text-line">bahkan di hari-hari saat kamu merasa kurang.</div>
+    <div class="text-line"></div>
+    <div class="text-line">Pelan-pelan aja.</div>
+    <div class="text-line">Aku bangga sama kamu 🤍</div>
+  </div>
+
+  <footer>
+    for atepxx 🤍
+  </footer>
+
+</div>
+
+<script>
+/* MUSIC */
+const love = document.getElementById('loveBtn');
+const music = document.getElementById('bgMusic');
+let playing = false;
+
+love.addEventListener('click', () => {
+  if (!playing) {
+    music.volume = 0;
+    music.play();
+
+    let fade = setInterval(() => {
+      if (music.volume < 0.8) {
+        music.volume += 0.05;
+      } else {
+        clearInterval(fade);
+      }
+    }, 200);
+
+    love.textContent = '💗';
+    playing = true;
+
+    startFlowers();
+    showText();
+  }
+});
+
+/* FLOWER FALL */
+function startFlowers() {
+  setInterval(() => {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.textContent = '🌸';
+    flower.style.left = Math.random() * window.innerWidth + 'px';
+    flower.style.animationDuration = (5 + Math.random() * 5) + 's';
+    document.body.appendChild(flower);
+
+    setTimeout(() => flower.remove(), 10000);
+  }, 600);
+}
+
+/* TEXT APPEAR PER LINE */
+function showText() {
+  const lines = document.querySelectorAll('.text-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => {
+      line.style.opacity = 1;
+      line.style.transform = 'translateY(0)';
+    }, i * 700);
+  });
+}
+</script>
+
+</body>
+</html>
